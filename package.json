@@ -1,0 +1,37 @@
+{
+  "name": "cytoscape.js-transform",
+  "version": "1.0.0",
+  "description": "Apply basic transformations to graph elements",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasanbalci/cytoscape.js-transform.git"
+  },
+  "keywords": [
+    "cytoscape",
+    "cytoscape-extension",
+    "graph",
+    "transformation"
+  ],
+  "author": "Hasan Balci",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hasanbalci/cytoscape.js-transform/issues"
+  },
+  "homepage": "https://github.com/hasanbalci/cytoscape.js-transform#readme",
+  "devDependencies": {
+    "patch-package": "^8.0.1",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "rollup": "^4.53.0"
+  },
+  "dependencies": {
+  }
+}
