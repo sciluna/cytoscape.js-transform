@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+
+<html>
+
+  <head>
+    <title>cytoscape-transform demo</title>
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">  
+
+    <!-- for testing with local version of cytoscape.js -->
+    <!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="dist/cytoscape-transform.umd.js"></script>
+
+    <style>
+      body {
+        font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+        font-size: 14px;
+      }
+
+      #cy {
+        position: absolute;
+        left: 0;
+        top: 65px;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+      }
+
+      h1 {
+        opacity: 0.5;
+        font-size: 1em;
+        font-weight: bold;
+      }
+    </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+
+        var cy = window.cy = cytoscape({
+          container: document.getElementById('cy'),
+
+          style: [
+            {
+              selector: 'node',
+              style: {
+                'content': 'data(name)',
+                'background-color': "rgb(153,153,153)"
+              }
+            },
+
+            {
+              selector: 'edge',
+              style: {
+                'target-arrow-shape': 'triangle'
+              }
+            },
+
+            {
+              selector: ':selected',
+              style: {
+                "border-width": 2,
+                "border-color": "rgb(1,105,217)"
+              }
+            }
+          ],
+          layout: {
+            name: 'preset',
+            padding: 100
+          },
+
+          elements: {
+            nodes: [
+              {data: {id: 'j', name: 'Jerry'}, position: {x: 0, y: 0}},
+              {data: {id: 'e', name: 'Elaine'}, position: {x: 0, y: 200}},
+              {data: {id: 'k', name: 'Kramer'}, position: {x: 200, y: 0}},
+              {data: {id: 'g', name: 'George'}, position: {x: 200, y: 200}}
+            ],
+            edges: [
+              {data: {source: 'j', target: 'e'}},
+              {data: {source: 'j', target: 'k'}},
+              {data: {source: 'j', target: 'g'}},
+              {data: {source: 'e', target: 'k'}},
+              {data: {source: 'k', target: 'g'}},
+            ]
+          },
+        });
+
+        // demo your core ext
+        const api = cy.transform({
+          animate: document.getElementById("animate").checked,
+          animationDuration: 1000
+        });
+        
+        document.getElementById("flipVertical").addEventListener("click", function() {
+          let selectedNodes = cy.nodes(":selected");
+          if (selectedNodes.length == 0) {
+            selectedNodes = cy.nodes();
+          }
+          api.flipVertical(selectedNodes);
+        });
+
+        document.getElementById("flipHorizontal").addEventListener("click", function() {
+          let selectedNodes = cy.nodes(":selected");
+          if (selectedNodes.length == 0) {
+            selectedNodes = cy.nodes();
+          }
+          api.flipHorizontal(selectedNodes);
+        });
+
+        document.getElementById("rotate").addEventListener("click", function() {
+          let selectedNodes = cy.nodes(":selected");
+          if (selectedNodes.length == 0) {
+            selectedNodes = cy.nodes();
+          }
+          let rotationDegree = parseInt(document.getElementById("rotationDegree").value);
+          api.rotate(selectedNodes, rotationDegree);
+        });
+
+        document.getElementById("scale").addEventListener("click", function() {
+          let selectedNodes = cy.nodes(":selected");
+          if (selectedNodes.length == 0) {
+            selectedNodes = cy.nodes();
+          }
+          let scalingFactor = parseFloat(document.getElementById("scalingFactor").value);
+          api.scale(selectedNodes, scalingFactor);
+        });
+
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>cytoscape-transform demo</h1>
+
+    <button id="flipVertical">Flip Vertically</button>
+    <button id="flipHorizontal">Flip Horizontally</button>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
+    <button id="rotate">Rotate</button>&nbsp;
+    <label for="rotationDegree">Rotation degree: </label>
+    <input type="number" id="rotationDegree" name="rotationDegree" min="-360" max="360" value="90" />&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
+    <button id="scale">Scale</button>&nbsp;
+    <label for="scalingFactor">Scaling factor: </label>
+    <input type="number" id="scalingFactor" name="scalingFactor" min="0" max="10" step="0.1" value="0.75" />&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
+
+    <label for="animate"> Animate:</label>
+    <input type="checkbox" id="animate" name="animate" checked>
+
+    <div id="cy"></div>
+
+  </body>
+
+</html>

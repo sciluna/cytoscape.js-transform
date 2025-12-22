@@ -5,14 +5,15 @@ export default function register(cytoscape) {
     let cy = this;
 
     let options = {
-
+      animate: true,
+      animationDuration: 1000
     };
     
     // If opts is not 'get' that is it is a real options object then initilize the extension
     if (opts !== 'get') {
       options = extendOptions(options, opts);
 
-      let api = transform(cy);
+      let api = transform(options);
 
       setScratch(cy, 'options', options);
       setScratch(cy, 'api', api);
@@ -20,6 +21,22 @@ export default function register(cytoscape) {
     // Expose the API to the users
     return getScratch(cy, 'api');
   });
+
+  // Get the whole scratchpad reserved for this extension (on an element or core) or get a single property of it
+  function getScratch(cyOrEle, name) {
+    if (cyOrEle.scratch('cyComplexityManagement') === undefined) {
+      cyOrEle.scratch('cyComplexityManagement', {});
+    }
+
+    var scratch = cyOrEle.scratch('cyComplexityManagement');
+    var retVal = (name === undefined) ? scratch : scratch[name];
+    return retVal;
+  }
+
+  // Set a single property on scratchpad of an element or the core
+  function setScratch(cyOrEle, name, val) {
+    getScratch(cyOrEle)[name] = val;
+  }
 
   function extendOptions(options, extendBy) {
     var tempOpts = {};
@@ -31,5 +48,8 @@ export default function register(cytoscape) {
         tempOpts[key] = extendBy[key];
     return tempOpts;
   }
+}
 
+if (typeof window.cytoscape !== 'undefined') {	// expose to global cytoscape (i.e. window.cytoscape)
+  register(window.cytoscape);
 }
