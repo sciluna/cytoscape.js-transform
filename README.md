@@ -5,6 +5,8 @@ This extension adds support for applying basic geometric transformations (flippi
 
 Click [here](https://hasanbalci.github.io/cytoscape.js-transform/demo/index.html) for a demo.
 
+https://github.com/user-attachments/assets/31e1edf8-d640-4f50-8bc5-e23a6a4a9040
+
 ## API
 
 `cy.transform(options)`
