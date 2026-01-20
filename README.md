@@ -27,6 +27,9 @@ Rotate the given nodes around the center of their bounding box by the given angl
 `api.scale(nodes, scalingFactor)`
 Scale the given nodes about the center of their bounding box by the given scaling factor.
 
+`api.setOption(optionName, optionValue)`
+Change the given option with the given value.
+
 ## Default Options
 ```javascript
     var options = {
@@ -67,8 +70,8 @@ cytoscape.use( transform ); // register extension
 AMD:
 
 ```js
-require(['cytoscape', 'cytoscape-fcose'], function( cytoscape, fcose ){
-  fcose( cytoscape ); // register extension
+require(['cytoscape', 'cytoscape-transform'], function( cytoscape, transform ){
+  transform( cytoscape ); // register extension
 });
 ```
 

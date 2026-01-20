@@ -15,6 +15,12 @@ export default function register(cytoscape) {
 
       let api = transform(options);
 
+      api.setOption = function(option, value) {
+        let options = getScratch(cy, 'options');
+        options[option] = value;
+        setScratch(cy, 'options', options);
+      };      
+
       setScratch(cy, 'options', options);
       setScratch(cy, 'api', api);
     }

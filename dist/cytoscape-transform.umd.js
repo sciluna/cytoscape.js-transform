@@ -152,6 +152,11 @@
       if (opts !== 'get') {
         options = extendOptions(options, opts);
         var api = transform(options);
+        api.setOption = function (option, value) {
+          var options = getScratch(cy, 'options');
+          options[option] = value;
+          setScratch(cy, 'options', options);
+        };
         setScratch(cy, 'options', options);
         setScratch(cy, 'api', api);
       }
